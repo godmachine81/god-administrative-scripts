@@ -1,0 +1,22 @@
+Index: Source/WebCore/rendering/RenderLayer.cpp
+===================================================================
+--- third_party/WebKit/Source/WebCore/rendering/RenderLayer.cpp	(revision 95854)
++++ third_party/WebKit/Source/WebCore/rendering/RenderLayer.cpp	(working copy)
+@@ -2656,7 +2656,7 @@ void RenderLayer::paintLayer(RenderLayer
+         paintFlags |= PaintLayerHaveTransparency;
+ 
+     // Apply a transform if we have one.  A reflection is considered to be a transform, since it is a flip and a translate.
+-    if (paintsWithTransform(paintBehavior) && !(paintFlags & PaintLayerAppliedTransform)) {
++    if ((paintsWithTransform(paintBehavior) || (isStackingContext() && (renderer()->isPositioned() || renderer()->isRelPositioned()))) && !(paintFlags & PaintLayerAppliedTransform)) {
+         TransformationMatrix layerTransform = renderableTransform(paintBehavior);
+         // If the transform can't be inverted, then don't paint anything.
+         if (!layerTransform.isInvertible())
+@@ -3091,7 +3091,7 @@ RenderLayer* RenderLayer::hitTestLayer(R
+     LayoutRect hitTestArea = result.rectForPoint(hitTestPoint);
+ 
+     // Apply a transform if we have one.
+-    if (transform() && !appliedTransform) {
++    if ((transform() || (isStackingContext() && (renderer()->isPositioned() || renderer()->isRelPositioned()))) && !appliedTransform) {
+         // Make sure the parent's clip rects have been calculated.
+         if (parent()) {
+             ClipRect clipRect = backgroundClipRect(rootLayer, useTemporaryClipRects, IncludeOverlayScrollbarSize);

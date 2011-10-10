@@ -1,0 +1,61 @@
+#required by net-print/cups-1.4.6-r2[php], required by x11-libs/qt-gui-4.7.2[cups], required by x11-libs/qt-core-4.7.2-r1[qt3support], required by app-text/poppler-0.14.5-r1[qt4]
+>=dev-lang/php-5.3.6 -mysqli gd -mysql
+gnome-base/gvfs gdu 
+sys-block/parted device-mapper
+#required by app-admin/syslog-ng-3.2.4[static], required by @selected, required by @world (argument)
+>=dev-libs/eventlog-0.2.12 static-libs
+#required by dev-db/mysql-5.1.56[static], required by virtual/mysql-5.1, required by x11-libs/qt-sql-4.7.3, required by x11-libs/qt-qt3support-4.7.3, required by x11-libs/qt-gui-4.7.3[qt3support], required by app-text/poppler-0.16.7[qt4], required by net-print/cups-1.4.6-r21, required by app-text/ghostscript-gpl-9.02[cups]
+>=sys-libs/ncurses-5.9 static-libs
+#required by sys-fs/cryptsetup-1.2.0-r1, required by sys-apps/pmount-0.9.23[crypt], required by @selected, required by @world (argument)
+>=dev-libs/libgcrypt-1.5.0 static-libs
+#required by sys-fs/cryptsetup-1.2.0-r1[static], required by sys-apps/pmount-0.9.23[crypt], required by @selected, required by @world (argument)
+>=dev-libs/popt-1.16-r1 static-libs
+#required by sys-fs/cryptsetup-1.2.0-r1[static], required by sys-apps/pmount-0.9.23[crypt], required by @selected, required by @world (argument)
+>=dev-libs/libgpg-error-1.10 static-libs
+>=dev-lang/php-5.2.17:5.2 gd curl pcntl zip
+>=media-libs/netpbm-10.51.00-r1 -tiff -png -xml -jpeg
+=dev-util/cmake-2.8.4-r1 -qt4
+>=dev-libs/libxml2-2.7.8-r1 icu
+net-print/cups -usb
+=x11-libs/gtk+-2.24.5-r1 -cups
+>=x11-libs/libdrm-2.4.26 video_cards_radeon
+=media-libs/libpng-1.4.7 apng
+dev-php5/pecl-ps php_targets_php5-2
+net-firewall/iptables netlink
+net-misc/moblock network-cron
+=www-client/firefox-5.0-r2 custom-cflags custom-optimization
+net-misc/asterisk gtalk
+>=net-libs/opal-3.6.8-r2 sip
+>=net-libs/ptlib-2.6.7-r1 wav
+=media-libs/libpng-1.4.8 apng
+net-misc/asterisk -samples jabber jingle
+net-misc/asterisk-core-sounds ulaw
+net-misc/asterisk-extra-sounds ulaw
+media-libs/mediastreamer -X -v4l2
+=media-libs/libpng-1.4.8-r1 apng
+www-client/chromium -cups -gnome
+net-irc/xchat -ipv6 hires-icons
+www-plugins/google-talkplugin -libnotify -system-libCg
+xfce-base/xfwm4 -xcomposite -startup-notification
+net-im/psi jingle extras
+www-plugins/adobe-flash -32bit -multilib vdpau
+www-client/chromium icu
+app-cdr/brasero doc nautilus playlist
+=media-video/ffmpeg-0.7.1 threads
+virtual/ffmpeg threads vdpau
+=media-video/ffmpeg-0.8 threads
+>=dev-php5/php-gtk-2.0.1-r4 php_targets_php5-2
+app-editors/bluefish gucharmap
+www-client/icecat custom-cflags custom-optimization -wifi -methodjit -webm
+dev-lang/php apache2 mysql
+=dev-lang/php-5.3.6-r1 mysql
+=dev-lang/php-5.3.6 mysql
+media-video/ffmpeg threads sse3 cpudetection vdpau 3dnow ssse3
+media-sound/rhythmbox ipod mtp
+app-arch/file-roller nautilus
+sys-devel/gcc gcj
+media-tv/xbmc webserver
+app-office/libreoffice templates
+x11-misc/shutter webphoto
+sys-block/gparted ntfs fat
+net-analyzer/wireshark threads

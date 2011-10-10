@@ -1,0 +1,122 @@
+#required by net-print/cups-1.4.6-r2[php], required by x11-libs/qt-gui-4.7.2[cups], required by x11-libs/qt-core-4.7.2-r1[qt3support], required by app-text/poppler-0.14.5-r1[qt4]
+>=dev-lang/php-5.3.6 -mysqli gd -mysql
+gnome-base/gvfs gdu 
+sys-block/parted device-mapper
+#required by app-admin/syslog-ng-3.2.4[static], required by @selected, required by @world (argument)
+>=dev-libs/eventlog-0.2.12 static-libs
+#required by dev-db/mysql-5.1.56[static], required by virtual/mysql-5.1, required by x11-libs/qt-sql-4.7.3, required by x11-libs/qt-qt3support-4.7.3, required by x11-libs/qt-gui-4.7.3[qt3support], required by app-text/poppler-0.16.7[qt4], required by net-print/cups-1.4.6-r21, required by app-text/ghostscript-gpl-9.02[cups]
+>=sys-libs/ncurses-5.9 static-libs
+#required by sys-fs/cryptsetup-1.2.0-r1, required by sys-apps/pmount-0.9.23[crypt], required by @selected, required by @world (argument)
+>=dev-libs/libgcrypt-1.5.0 static-libs
+#required by sys-fs/cryptsetup-1.2.0-r1[static], required by sys-apps/pmount-0.9.23[crypt], required by @selected, required by @world (argument)
+>=dev-libs/popt-1.16-r1 static-libs
+#required by sys-fs/cryptsetup-1.2.0-r1[static], required by sys-apps/pmount-0.9.23[crypt], required by @selected, required by @world (argument)
+>=dev-libs/libgpg-error-1.10 static-libs
+>=dev-lang/php-5.2.17:5.2 gd curl pcntl zip
+>=media-libs/netpbm-10.51.00-r1 -tiff -png -xml -jpeg
+=dev-util/cmake-2.8.4-r1 -qt4
+>=dev-libs/libxml2-2.7.8-r1 icu
+net-print/cups -usb
+=x11-libs/gtk+-2.24.5-r1 -cups
+>=x11-libs/libdrm-2.4.26 video_cards_radeon
+=media-libs/libpng-1.4.7 apng
+dev-php5/pecl-ps php_targets_php5-2
+net-firewall/iptables netlink
+net-misc/moblock network-cron
+=www-client/firefox-5.0-r2 custom-cflags custom-optimization
+net-misc/asterisk gtalk
+>=net-libs/opal-3.6.8-r2 sip
+>=net-libs/ptlib-2.6.7-r1 wav
+=media-libs/libpng-1.4.8 apng
+net-misc/asterisk -samples jabber jingle
+net-misc/asterisk-core-sounds ulaw
+net-misc/asterisk-extra-sounds ulaw
+media-libs/mediastreamer -X -v4l2
+=media-libs/libpng-1.4.8-r1 apng
+www-client/chromium -cups -gnome
+net-irc/xchat -ipv6 hires-icons
+www-plugins/google-talkplugin -libnotify -system-libCg
+xfce-base/xfwm4 xcomposite -startup-notification
+net-im/psi jingle extras
+www-plugins/adobe-flash -32bit -multilib -vdpau
+www-client/chromium icu pulseaudio
+app-cdr/brasero doc nautilus playlist
+=media-video/ffmpeg-0.7.1 threads
+virtual/ffmpeg threads -vdpau
+=media-video/ffmpeg-0.8 threads
+>=dev-php5/php-gtk-2.0.1-r4 php_targets_php5-2
+app-editors/bluefish gucharmap
+www-client/icecat custom-cflags custom-optimization -wifi -methodjit -webm
+dev-lang/php apache2 mysql curl pcntl zip
+=dev-lang/php-5.3.6-r1 mysql
+=dev-lang/php-5.3.6 mysql
+media-video/ffmpeg threads sse3 cpudetection -vdpau 3dnow ssse3
+media-sound/rhythmbox ipod mtp
+app-arch/file-roller nautilus
+sys-devel/gcc gcj
+media-tv/xbmc webserver
+app-office/libreoffice templates custom-cflags java
+x11-misc/shutter webphoto
+sys-block/gparted ntfs fat
+net-analyzer/wireshark threads
+#required by kde-base/dolphin-4.7.0, required by kde-base/dolphin (argument)
+>=x11-libs/qt-webkit-4.7.3 kde
+#required by kde-base/dolphin-4.7.0, required by kde-base/dolphin (argument)
+>=x11-libs/qt-qt3support-4.7.3 kde
+media-video/mplayer ssse3 -vdpau 3dnow
+x11-base/xorg-server static-libs
+media-libs/libmad static-libs
+media-libs/libao static-libs
+dev-libs/lzo static-libs
+#media-libs/babl -introspection
+dev-lang/ruby threads
+>=dev-lang/php-5.3.8 mysql
+app-admin/webmin apache2
+media-sound/pulseaudio avahi equalizer system-wide realtime -ipv6 -bluetooth
+media-video/miro musepack
+media-sound/gpodder webkit gstreamer -dbus -bluetooth
+sys-kernel/pf-sources symlink
+media-libs/freetype -auto-hinter
+media-libs/mesa video_cards_radeon
+#required by media-gfx/splashutils-1.5.4.4[mng], required by splashutils (argument)
+>=media-libs/lcms-1.19:0 static-libs
+#required by media-gfx/splashutils-1.5.4.4[png], required by splashutils (argument)
+=media-libs/libpng-1.4.8-r1 static-libs
+#required by media-gfx/splashutils-1.5.4.4[truetype], required by splashutils (argument)
+>=app-arch/bzip2-1.0.6-r3 static-libs
+#required by virtual/jpeg-0, required by media-libs/libmng-1.0.10-r1, required by media-gfx/splashutils-1.5.4.4[mng], required by splashutils (argument)
+>=media-libs/libjpeg-turbo-1.1.1 static-libs
+#required by media-gfx/splashutils-1.5.4.4, required by splashutils (argument)
+>=virtual/jpeg-0 static-libs
+#required by media-gfx/splashutils-1.5.4.4[mng], required by splashutils (argument)
+>=media-libs/libmng-1.0.10-r1 static-libs
+#required by media-gfx/splashutils-1.5.4.4[truetype], required by splashutils (argument)
+>=media-libs/freetype-2.4.6 static-libs
+net-p2p/transmission -qt4 nls
+x11-terms/xterm unicode
+sci-geosciences/googleearth -qt-bundled
+games-fps/warsow openal
+sys-apps/coreutils -static
+sys-apps/lshw -static
+sys-boot/grub -static
+net-misc/wget -static
+dev-db/mysql -static
+virtual/mysql -static
+net-misc/openssh -static
+sys-apps/busybox -static
+media-video/transcode mjpeg 3dnow
+media-video/tovid tk wxwidgets
+dev-lang/python tk
+media-video/ogmrip ogm theora srt
+media-video/devede psyco
+media-libs/libpng static-libs
+www-client/firefox-bin -startup-notification
+>=sys-libs/zlib-1.2.5.1-r2 minizip
+media-sound/audacious gtk3
+www-client/chromium:live -pulseaudio
+app-emulation/wine gstreamer
+kde-base/blogilo aqua kdeenablefinal
+media-video/gnome-mplayer musicbrainz ipod -dbus -alsa -libnotify
+sys-kernel/ck-sources -symlink
+sys-kernel/mm-sources -symlink
+app-text/fbreader -qt4

@@ -1,0 +1,3 @@
+=net-libs/xulrunner-2.0.1-r1
+>=dev-lang/php-5.2.17:5.2
+

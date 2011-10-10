@@ -1,0 +1,9 @@
+#>=media-tv/xbmc-9999
+#moving chromium related pkgs to chromium.unmask
+#=www-client/chromium-16.0.891.0
+#>=www-client/chromium-9999
+>=media-libs/amd64codecs-20071007
+=net-news/yarssr-0.2.2-r2::my_repo
+www-client/google-chrome
+=media-gfx/gimp-2.7.3
+=dev-lang/php-5.2.17:5.2

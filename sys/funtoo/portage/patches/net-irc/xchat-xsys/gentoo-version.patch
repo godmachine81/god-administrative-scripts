@@ -1,0 +1,11 @@
+--- parse.c	2007-11-12 14:42:20.000000000 -0600
++++ parse.c.new	2011-10-03 19:41:01.345583119 -0500
+@@ -389,6 +389,8 @@
+ 		}
+ 		snprintf(buffer, bsize, "%s \"%s\" %s", id, codename, release);
+ 	}
++	else if((fp = fopen("/etc/gentoo-release", "r")) != NULL)
++		fgets(buffer, bsize, fp);
+ 	else if((fp = fopen("/etc/make.conf", "r")) != NULL)
+ 	{
+ 		char keywords[bsize];

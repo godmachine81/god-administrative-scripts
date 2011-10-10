@@ -1,0 +1,10 @@
+#SOLVED#
+#sys-apps/gnome-disk-utility-3.0.2-r200 
+#fails to build due to "libgtk-3.so: undefined reference to `g_datalist_get_data" on 10/5/2011
+#>sys-apps/gnome-disk-utility-3.0.2
+#<sys-apps/gnome-disk-utility-3.0.2
+
+#SOLVED#
+#Packages failing to build with glib 2.30.0 on 10/3/2011
+#>dev-libs/glib-2.28.8
+#=net-libs/glib-networking-2.30.0

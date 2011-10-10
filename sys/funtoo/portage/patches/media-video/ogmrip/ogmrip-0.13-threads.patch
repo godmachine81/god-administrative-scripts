@@ -1,0 +1,161 @@
+Index: libogmrip/ogmrip-encoding.c
+===================================================================
+--- libogmrip/ogmrip-encoding.c	(révision 2042)
++++ libogmrip/ogmrip-encoding.c	(copie de travail)
+@@ -665,7 +665,7 @@
+   encoding->priv->copy_dvd = TRUE;
+ 
+ #ifdef HAVE_SYSCONF_NPROC
+-  encoding->priv->threads = 0;
++  encoding->priv->threads = sysconf (_SC_NPROCESSORS_ONLN);
+ #else
+   encoding->priv->threads = 1;
+ #endif
+@@ -2124,7 +2124,6 @@
+ 
+   gchar *output;
+   guint start_delay, num, denom;
+-  gint threads;
+ 
+   output = ogmrip_fs_mktemp ("video.XXXXXX", error);
+   if (!output)
+@@ -2140,14 +2139,7 @@
+   ogmrip_codec_set_progressive (OGMRIP_CODEC (spawn), encoding->priv->progressive);
+   ogmrip_codec_set_telecine (OGMRIP_CODEC (spawn), encoding->priv->telecine);
+ 
+-  threads = encoding->priv->threads;
+-
+-#ifdef HAVE_SYSCONF_NPROC
+-  if (!threads)
+-    threads = sysconf (_SC_NPROCESSORS_ONLN);
+-#endif
+-
+-  ogmrip_video_codec_set_threads (OGMRIP_VIDEO_CODEC (spawn), threads);
++  ogmrip_video_codec_set_threads (OGMRIP_VIDEO_CODEC (spawn), encoding->priv->threads);
+   ogmrip_video_codec_set_passes  (OGMRIP_VIDEO_CODEC (spawn), encoding->priv->passes);
+   ogmrip_video_codec_set_quality (OGMRIP_VIDEO_CODEC (spawn), encoding->priv->preset);
+   ogmrip_video_codec_set_denoise (OGMRIP_VIDEO_CODEC (spawn), encoding->priv->denoise);
+@@ -3912,10 +3904,7 @@
+ {
+   g_return_if_fail (OGMRIP_IS_ENCODING (encoding));
+   g_return_if_fail (!OGMRIP_ENCODING_IS_RUNNING (encoding));
+-
+-#ifndef HAVE_SYSCONF_NPROC
+   g_return_if_fail (threads > 0);
+-#endif
+ 
+   encoding->priv->threads = threads;
+ }
+Index: src/ogmrip-main.c
+===================================================================
+--- src/ogmrip-main.c	(révision 2042)
++++ src/ogmrip-main.c	(copie de travail)
+@@ -916,6 +916,8 @@
+     ogmrip_encoding_set_bitrate (encoding, g_value_get_int (value));
+   else if (g_str_equal (key, OGMRIP_GCONF_VIDEO_QUANTIZER))
+     ogmrip_encoding_set_quantizer (encoding, g_value_get_double (value));
++  else if (g_str_equal (key, OGMRIP_GCONF_THREADS))
++    ogmrip_encoding_set_threads (encoding, g_value_get_int (value));
+   else if (g_str_equal (key, OGMRIP_GCONF_CONTAINER_FORMAT))
+   {
+     /*
+@@ -1128,6 +1130,8 @@
+     ogmrip_encoding_set_video_codec_type (encoding, video_codec_type, NULL);
+ 
+     ogmrip_settings_set_property_from_key (settings, G_OBJECT (encoding),
++        "threads", OGMRIP_GCONF_ADVANCED, OGMRIP_GCONF_THREADS);
++    ogmrip_settings_set_property_from_key (settings, G_OBJECT (encoding),
+         "keep-tmp-files", OGMRIP_GCONF_ADVANCED, OGMRIP_GCONF_KEEP_TMP);
+     ogmrip_settings_set_property_from_key (settings, G_OBJECT (encoding),
+         "copy-dvd", OGMRIP_GCONF_ADVANCED, OGMRIP_GCONF_COPY_DVD);
+Index: src/ogmrip-pref-dialog.c
+===================================================================
+--- src/ogmrip-pref-dialog.c	(révision 2042)
++++ src/ogmrip-pref-dialog.c	(copie de travail)
+@@ -275,6 +275,10 @@
+   ogmrip_settings_bind (settings,
+       OGMRIP_GCONF_ADVANCED, OGMRIP_GCONF_AFTER_ENC, G_OBJECT (widget), "active");
+ 
++  widget = glade_xml_get_widget (xml, "threads-spin");
++  ogmrip_settings_bind (settings,
++      OGMRIP_GCONF_ADVANCED, OGMRIP_GCONF_THREADS, G_OBJECT (widget), "value");
++
+   widget = glade_xml_get_widget (xml, "keep-tmp-check");
+   ogmrip_settings_bind (settings,
+       OGMRIP_GCONF_ADVANCED, OGMRIP_GCONF_KEEP_TMP, G_OBJECT (widget), "active");
+@@ -298,17 +302,6 @@
+   gtk_file_chooser_set_action (GTK_FILE_CHOOSER (widget), 
+       GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
+ 
+-#ifndef HAVE_SYSCONF_NPROC
+-  widget = glade_xml_get_widget (xml, "threads-label");
+-  gtk_widget_show (widget);
+-
+-  widget = glade_xml_get_widget (xml, "threads-spin");
+-  gtk_widget_show (widget);
+-
+-  ogmrip_settings_bind (settings, OGMRIP_GCONF_ADVANCED,
+-      OGMRIP_GCONF_THREADS, G_OBJECT (widget), "value");
+-#endif
+-
+   g_object_unref (xml);
+ }
+ 
+Index: src/ogmrip-gconf.c
+===================================================================
+--- src/ogmrip-gconf.c	(révision 2042)
++++ src/ogmrip-gconf.c	(copie de travail)
+@@ -16,6 +16,10 @@
+  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include "ogmrip-fs.h"
+ #include "ogmrip-gconf.h"
+ #include "ogmrip-helper.h"
+@@ -24,6 +28,7 @@
+ #include "ogmrip-gconf-settings.h"
+ 
+ #include <string.h>
++#include <unistd.h>
+ 
+ OGMRipSettings *settings;
+ 
+@@ -122,8 +127,14 @@
+       g_param_spec_int (OGMRIP_GCONF_CHAPTER_LANG, NULL, NULL, 0, G_MAXINT, OGMRIP_DEFAULT_CHAPTER_LANG, G_PARAM_READWRITE));
+   ogmrip_settings_install_key (settings,
+       g_param_spec_int (OGMRIP_GCONF_AFTER_ENC, NULL, NULL, 0, 3, OGMRIP_DEFAULT_AFTER_ENC, G_PARAM_READWRITE));
++
++#ifdef HAVE_SYSCONF_NPROC
+   ogmrip_settings_install_key (settings,
++      g_param_spec_int (OGMRIP_GCONF_THREADS, NULL, NULL, 1, G_MAXINT, sysconf (_SC_NPROCESSORS_ONLN), G_PARAM_READWRITE));
++#else
++  ogmrip_settings_install_key (settings,
+       g_param_spec_int (OGMRIP_GCONF_THREADS, NULL, NULL, 1, G_MAXINT, OGMRIP_DEFAULT_THREADS, G_PARAM_READWRITE));
++#endif
+ 
+   ogmrip_settings_install_key (settings,
+       g_param_spec_boolean (OGMRIP_GCONF_COPY_DVD, NULL, NULL, OGMRIP_DEFAULT_COPY_DVD, G_PARAM_READWRITE));
+Index: data/ogmrip-pref.glade
+===================================================================
+--- data/ogmrip-pref.glade	(révision 2042)
++++ data/ogmrip-pref.glade	(copie de travail)
+@@ -410,6 +410,7 @@
+                             </child>
+                             <child>
+                               <widget class="GtkLabel" id="threads_label">
++                                <property name="visible">True</property>
+                                 <property name="xalign">0</property>
+                                 <property name="label" translatable="yes">_Threads:</property>
+                                 <property name="use_underline">True</property>
+@@ -424,6 +425,7 @@
+                             </child>
+                             <child>
+                               <widget class="GtkSpinButton" id="threads-spin">
++                                <property name="visible">True</property>
+                                 <property name="can_focus">True</property>
+                                 <property name="adjustment">1 1 100 1 10 0</property>
+                                 <property name="climb_rate">1</property>

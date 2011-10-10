@@ -1,0 +1,4 @@
+#ignore floppym's overlay for 9999 since he is now pushing to gentoo
+=www-client/chromium-9999-r1::floppym
+#skipped on 10/5/2011
+=www-client/chromium-16.0.899.0

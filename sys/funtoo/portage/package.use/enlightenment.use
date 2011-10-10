@@ -1,0 +1,5 @@
+# move x11-libs/e_dbus dev-libs/e_dbus
+dev-libs/e_dbus X
+media-libs/evas X jpeg png svg xpm fontconfig
+# move x11-libs/ecore dev-libs/ecore
+dev-libs/ecore X curl
