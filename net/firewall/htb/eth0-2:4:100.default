@@ -1,0 +1,4 @@
+RATE=3200Kbit
+CEIL=3700Kbit
+LEAF=sfq
+PRIO=10
