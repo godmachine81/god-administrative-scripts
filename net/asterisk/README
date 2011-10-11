@@ -1,4 +1,4 @@
-The configuration files inside this directory is a simple preconfigured set to get inbound/outbound
-calls to/from google voice to work with asterisk. It is very important you read the comments especially
-in the dial plan (extensions.conf) and sip (sip.conf) before you can expect this to work. These 
-asterisk scripts should be used mainly as a reference. 
+The configuration files inside this directory are a simple set of preconfigured rules to get 
+inbound/outbound calls to/from google voice to work with asterisk. It is very important you 
+read the comments especially in the dial plan (extensions.conf) and sip (sip.conf) before you
+can expect this to work. These asterisk configs should be used mainly as a reference. 
